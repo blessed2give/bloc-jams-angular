@@ -41,7 +41,7 @@
              for (var i=0; i < numberOfAlbums; i++) {
                  this.collections.push(angular.copy(albumPicasso));
          }
-             return collections;
+             return collection;
          };
          
          return Fixtures;
