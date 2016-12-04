@@ -29,12 +29,20 @@
              currentSong = song;
          };
          
+         /*
+         * @function playSong
+         * @desc When a new song is played, play the current song and set the playing property to true
+         */
+         var playSong = function() {
+             currentBuzzObject.play();
+             currentSong.playing = true;
+         };
+         
          SongPlayer.play = function(song) {
              
              if (currentSong !== song) {
                  setSong(song);
-                 currentBuzzObject.play();
-                 song.playing = true;
+                 playSong();
                  
              } else if (currentSong === song) {
                  if (currentBuzzObject.isPaused()) {
