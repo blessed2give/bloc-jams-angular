@@ -13,13 +13,23 @@
             templateUrl: '/templates/directives/seek_bar.html',
             replace: true,
             restrict: 'E',
-            scope: { },
+            scope: {
+                onChange: '&'
+            },
             link: function(scope, element, attributes) {
                 // directive logic to return
                 scope.value = 0;
                 scope.max = 100;
                 
                 var seekBar = $(element);
+                
+                attributes.$observe('value', function(newValue) {
+                    scope.value = newValue;
+                    });
+                
+                attributes.$observe('max', function(newValue) {
+                    scope.max = newValue;
+                    });
 
                 var percentString = function () {
                     var value = scope.value;
@@ -31,10 +41,15 @@
                 scope.fillStyle = function() {
                     return {width: percentString()};
                 };
+                                
+                scope.thumbStyle = function() {
+                    return {left: percentString()};
+                };
                 
                 scope.onClickSeekBar = function(event) {
                     var percent = calculatePercent(seekBar, event);
                     scope.value = percent * scope.max;
+                    notifyOnChange(scope.value);
                 };
                 
                 scope.trackThumb = function() {
@@ -42,6 +57,7 @@
                         var percent = calculatePercent(seekBar, event);
                         scope.$apply(function() {
                             scope.value = percent * scope.max;
+                            notifyOnChange(scope.value);
                         });
                     });
  
@@ -49,6 +65,12 @@
                     $document.unbind('mousemove.thumb');
                     $document.unbind('mouseup.thumb');
                         });
+                };
+                
+                var notifyOnChange = function(newValue) {
+                    if (typeof scope.onChange === 'function') {
+                        scope.onChange({value: newValue});
+                    }
                 };
             }
         };
