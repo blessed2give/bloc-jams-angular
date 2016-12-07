@@ -1,12 +1,13 @@
 (function() {
     function seekBar($document) {
         var calculatePercent = function(seekBar, event) {
-        var offsetX = event.pageX - seekBar.offset().left;
-        var seekBarWidth = seekBar.width();
-        var offsetXPercent = offsetX / seekBarWidth;
-        offsetXPercent = Math.max(0, offsetXPercent);
-        offsetXPercent = Math.min(1, offsetXPercent);
-        return offsetXPercent;
+            var offsetX = event.pageX - seekBar.offset().left;
+            var seekBarWidth = seekBar.width();
+            var offsetXPercent = offsetX / seekBarWidth;
+            offsetXPercent = Math.max(0, offsetXPercent);
+            offsetXPercent = Math.min(1, offsetXPercent);
+            
+            return offsetXPercent;
  };
         
         return {
